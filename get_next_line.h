@@ -6,7 +6,7 @@
 /*   By: ostouayr <ostouayr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:43:46 by ostouayr          #+#    #+#             */
-/*   Updated: 2024/11/18 10:33:19 by ostouayr         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:45:57 by ostouayr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <fcntl.h>
 
 typedef struct s_list
