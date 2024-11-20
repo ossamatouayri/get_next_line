@@ -6,7 +6,7 @@
 /*   By: ostouayr <ostouayr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:43:46 by ostouayr          #+#    #+#             */
-/*   Updated: 2024/11/18 17:45:57 by ostouayr         ###   ########.fr       */
+/*   Updated: 2024/11/20 09:48:10 by ostouayr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ typedef struct s_list
 	struct s_list *next;
 }	t_list;
 
-char	*get_next_line(int fd);
+
 
 #endif

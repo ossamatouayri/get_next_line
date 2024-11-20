@@ -5,106 +5,186 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ostouayr <ostouayr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 10:06:23 by ostouayr          #+#    #+#             */
-/*   Updated: 2024/11/18 21:43:23 by ostouayr         ###   ########.fr       */
+/*   Created: 2024/11/20 09:47:41 by ostouayr          #+#    #+#             */
+/*   Updated: 2024/11/20 12:56:35 by ostouayr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "get_next_line.h"
 
-void append(t_list **list, char *buff)
+void get_list(t_list **head, int fd)
 {
-	t_list *new_node;
-	t_list *last_node;
-
-	last_node = find_last_node(*list);
-	new_node = malloc(sizeof(t_list));
-	if (!new_node)
-		return ;
-	if (!last_node)
-		*list = new_node;
-	else
-		last_node->next = new_node;
-	new_node->content = buff;
-	new_node->next = NULL;
-}
-char *get_line(t_list *list)
-{
-	int	str_len;
-	char *next_string;
-
-	if(!list)
-		return (NULL);
-	str_len = len_to_newline(list);
-	next_string = malloc(str_len + 1);
-	if (!next_string)
-		return (NULL);
-	copy_str(list,next_string);
-	return (next_string);
-}
-
-void clear_list(t_list **list)
-{
-	t_list *last_node;
-	t_list *clean_node;
-	int i;
-	int j;
+	int chars_reads;
 	char *buff;
 
-	buff = malloc(BUFFER_SIZE + 1);
-	if (!buff)
-		return ;
-	last_node = find_last_node(*list);
-	i = 0;
-	j = 0;
-	while(last_node->content[i] != '\0' && last_node->content[i] != '\n')
-		i++;
-	while(last_node->content[i] != '\0' && last_node->content[++i])
-		buff[++j] = last_node->content[i];
-	buff[j] = '\0';
-	clean_node->content = buff;
-	clean_node->next = NULL;
-	clear_nodes(list, clean_node, buff);
-}
-void creat_list(t_list **list, int fd)
-{
-	int	chars_read;
-	char *buff;
-	while (!found_newline(*list))
+	while(!get_newline(*head))
 	{
 		buff = malloc(BUFFER_SIZE + 1);
 		if (!buff)
 			return ;
-		chars_read = read(fd, buff, BUFFER_SIZE);
-		if (!chars_read)
+		chars_reads = read(fd, buff, BUFFER_SIZE);
+		if (!chars_reads)
 		{
 			free(buff);
 			return ;
 		}
-		buff[chars_read] = '\0';
-		append(list,buff);
+		buff[chars_reads] = '\0';
+		append_list(head,buff);
 	}
+}
+char *ft_strdup(char *str)
+{
+	int	i;
+	char *n_str;
+
+	i = 0;
+	n_str = malloc(ft_strlen(str) + 1);
+	if (!str)
+		return (NULL);
+	while(str[i])
+	{
+		n_str[i] = str[i];
+		i++;
+	}
+	n_str[i] = '\0';
+	return (n_str);
+}
+int get_newline(t_list *head)
+{
+	int i;
+
+	while(head)
+	{
+		i = 0;
+		while(head->content[i])
+		{
+			if (head->content[i] == '\n')
+				return (1);
+			i++;
+		}
+		head = head->next;
+	}
+	return (0);
+}
+char *extract_lines(t_list *head)
+{
+	char	*new_str;
+	int	new_len;
+	int i;
+	int j;
+	
+	new_len = len_to_newline(head);
+	new_str = malloc(new_len + 1);
+	if (!new_str)
+		return (NULL);
+	i = 0;
+	while(head)
+	{
+		j = 0;
+		while(head->content[j])
+		{
+			new_str[i++] = head->content[j++];
+			if (head->content[j - 1] == '\n')
+			{
+				new_str[i] = '\0'; 
+				return (new_str);
+			}
+		}
+		head = head->next;
+	}
+	new_str[i] = '\0';
+	return (new_str);
+}
+int	len_to_newline(t_list *head)
+{
+	int i;
+	int len;
+
+	len = 0;
+	if (!head)
+		return (0);
+	while (head)
+	{
+		i = 0;
+		while(head->content[i])
+		{
+			if (head->content[i] == '\n')
+			{
+				++len;
+				return (len);
+			}
+			++len;
+			i++;
+		}
+		head = head->next;
+	}
+	return (len);
+}
+void	append_list(t_list **head, char *buff)
+{
+	t_list	*new_node;
+	t_list	*current;
+	
+	new_node = malloc(sizeof(t_list));
+	if (!new_node)
+		return ;
+	new_node->content = ft_strdup(buff);
+	new_node->next = NULL;
+	if (!*head)
+	{
+		*head = new_node;
+		return ;
+	}
+	current = *head;
+	while(current->next)
+		current = current->next;
+	current->next = new_node;
+}
+int	ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while(str[i])
+		i++;
+	return (i);
+}
+t_list *update_list(t_list **head)
+{
+	t_list *new_head;
+	int len;
+
+	new_head = *head;
+	len = len_to_newline(*head);
+	while (*head && len > 0)
+	{
+		if(len >= ft_strlen((*head)->content))
+		{
+			len -= ft_strlen((*head)->content);
+			free((*head)->content);
+			*head = (*head)->next;
+		}
+		else
+		{
+			(*head)->content = ft_strdup((*head)->content + len);
+			return (new_head); 
+		}
+	}
+	return (*head);
 }
 char *get_next_line(int fd)
 {
-	static t_list *list = NULL;
-	char	*next_line;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd,&next_line,0)< 0)
+	static t_list *head;
+	t_list *next_line;
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
 		return (NULL);
-	creat_list(&list, fd);
-	if (!list)
+	get_list(&head,fd);
+	if (!head)
 		return (NULL);
-	next_line = get_line(list);
-	clear_list(&list);
+	next_line = extract_lines(head);
+	head = update_list(&head);
 	return (next_line);
 }
-int main(){
-	int fd;
-	int lines;
-	char *line;
-	fd = open("text.txt", O_RDONLY);
-	while(line = get_next_line(fd))
-	{
-		printf("%d->%s\n",lines++,line);
-	}
-}
+int main()
