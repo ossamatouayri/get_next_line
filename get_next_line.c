@@ -6,7 +6,7 @@
 /*   By: ostouayr <ostouayr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:47:41 by ostouayr          #+#    #+#             */
-/*   Updated: 2024/11/20 12:56:35 by ostouayr         ###   ########.fr       */
+/*   Updated: 2024/11/20 20:44:25 by ostouayr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@ void get_list(t_list **head, int fd)
 		if (!buff)
 			return ;
 		chars_reads = read(fd, buff, BUFFER_SIZE);
-		if (!chars_reads)
+		if (chars_reads <= 0)
 		{
 			free(buff);
 			return ;
 		}
 		buff[chars_reads] = '\0';
-		append_list(head,buff);
+		append_list(head, buff);
+		if (get_newline(*head))
+			break;
 	}
 }
 char *ft_strdup(char *str)
@@ -40,7 +42,7 @@ char *ft_strdup(char *str)
 
 	i = 0;
 	n_str = malloc(ft_strlen(str) + 1);
-	if (!str)
+	if (!n_str)
 		return (NULL);
 	while(str[i])
 	{
@@ -76,6 +78,7 @@ char *extract_lines(t_list *head)
 	
 	new_len = len_to_newline(head);
 	new_str = malloc(new_len + 1);
+	printf("%d\n",new_len);
 	if (!new_str)
 		return (NULL);
 	i = 0;
@@ -84,12 +87,13 @@ char *extract_lines(t_list *head)
 		j = 0;
 		while(head->content[j])
 		{
-			new_str[i++] = head->content[j++];
-			if (head->content[j - 1] == '\n')
+			if (head->content[j] == '\n')
 			{
-				new_str[i] = '\0'; 
+				new_str[i++] = '\n';
+				new_str[i] = '\0';
 				return (new_str);
 			}
+			new_str[i++] = head->content[j++];
 		}
 		head = head->next;
 	}
@@ -115,7 +119,7 @@ int	len_to_newline(t_list *head)
 				return (len);
 			}
 			++len;
-			i++;
+			++i;
 		}
 		head = head->next;
 	}
@@ -163,6 +167,7 @@ t_list *update_list(t_list **head)
 		{
 			len -= ft_strlen((*head)->content);
 			free((*head)->content);
+			free(head);
 			*head = (*head)->next;
 		}
 		else
@@ -176,7 +181,7 @@ t_list *update_list(t_list **head)
 char *get_next_line(int fd)
 {
 	static t_list *head;
-	t_list *next_line;
+	char *next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0)
 		return (NULL);
@@ -188,3 +193,14 @@ char *get_next_line(int fd)
 	return (next_line);
 }
 int main()
+{
+	// int fd;
+	// char *lines;
+	// int line = 1;
+	// fd = open("text.txt", O_RDONLY);
+	// printf("files descriptor is : %d\n",fd);
+	// lines = get_next_line(fd);
+	// printf("%s\n",lines);
+	// lines = get_next_line(fd);
+	printf("%p",NULL);
+}
