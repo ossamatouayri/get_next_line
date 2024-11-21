@@ -122,35 +122,34 @@ t_list *update_list(t_list **head)
 }
 char *get_next_line(int fd)
 {
-	static t_list *head;
+	static t_list *head[1024];
 	char *next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	get_list(&head,fd);
-	if (!head)
+	get_list(&head[fd],fd);
+	if (!head[fd])
 		return (NULL);
-	next_line = extract_lines(head);
-	head = update_list(&head);
+	next_line = extract_lines(head[fd]);
+	head[fd] = update_list(&head[fd]);
 	return (next_line);
 }
 int main()
 {
     int fd = open("text.txt", O_RDONLY);
-	 int fdd = open("tit.txt", O_RDONLY);
-    char *line;
+	int fdd = open("tit.txt", O_RDONLY);
 	char *line1;
-	line1 = get_next_line(fdd);
-	printf("%d->%s",fdd,line1);
+    char *line;
     if (fd < 0)
     {
         perror("Error opening file");
         return (1);
     }
 	line = get_next_line(fd);
+	line1 = get_next_line(fdd);
 	printf("%d->%s",fd,line);
+	printf("%d->%s",fdd,line1);
 	free(line);
-	free(line1);
     close(fd);
     return (0);
 }
