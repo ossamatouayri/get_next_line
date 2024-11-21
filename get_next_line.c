@@ -6,7 +6,7 @@
 /*   By: ostouayr <ostouayr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:47:41 by ostouayr          #+#    #+#             */
-/*   Updated: 2024/11/21 15:07:27 by ostouayr         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:28:29 by ostouayr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,20 +138,20 @@ char *get_next_line(int fd)
 int main()
 {
     int fd = open("text.txt", O_RDONLY);
+	 int fdd = open("tit.txt", O_RDONLY);
     char *line;
-
+	char *line1;
+	line1 = get_next_line(fdd);
+	printf("%d->%s",fdd,line1);
     if (fd < 0)
     {
         perror("Error opening file");
         return (1);
     }
-
-    while ((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-    }
-
+	line = get_next_line(fd);
+	printf("%d->%s",fd,line);
+	free(line);
+	free(line1);
     close(fd);
     return (0);
 }
