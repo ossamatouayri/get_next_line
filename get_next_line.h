@@ -6,14 +6,14 @@
 /*   By: ostouayr <ostouayr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:43:46 by ostouayr          #+#    #+#             */
-/*   Updated: 2024/11/20 20:44:55 by ostouayr         ###   ########.fr       */
+/*   Updated: 2024/11/21 09:54:56 by ostouayr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef GET_NEXT_LINE_H
 #define GET_NEXT_LINE_H
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 10
+#define BUFFER_SIZE 
 # endif
 
 #include <stdio.h>
