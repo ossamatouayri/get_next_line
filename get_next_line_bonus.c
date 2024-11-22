@@ -134,22 +134,3 @@ char *get_next_line(int fd)
 	head[fd] = update_list(&head[fd]);
 	return (next_line);
 }
-int main()
-{
-    int fd = open("text.txt", O_RDONLY);
-	int fdd = open("tit.txt", O_RDONLY);
-	char *line1;
-    char *line;
-    if (fd < 0)
-    {
-        perror("Error opening file");
-        return (1);
-    }
-	line = get_next_line(fd);
-	line1 = get_next_line(fdd);
-	printf("%d->%s",fd,line);
-	printf("%d->%s",fdd,line1);
-	free(line);
-    close(fd);
-    return (0);
-}

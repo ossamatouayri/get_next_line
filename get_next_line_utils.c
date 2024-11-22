@@ -95,3 +95,26 @@ int	len_to_newline(t_list *head)
 	}
 	return (len);
 }
+void update_list_v2(t_list **head, int len, t_list *new_head, char *remaining)
+{
+	t_list *tmp;
+
+	while (*head && len > 0)
+	{
+		tmp = (*head)->next;
+		if (len >= ft_strlen((*head)->content))
+		{
+			len -= ft_strlen((*head)->content);
+			free((*head)->content);
+			free(*head);
+			*head = tmp;
+		}
+		else
+		{
+			remaining = ft_strdup((*head)->content + len);
+			free((*head)->content);
+			return (((*head)->content) = remaining, *head);
+		}
+	}
+	return (*head);
+}
