@@ -10,18 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-char *ft_strdup(char *str)
+char	*ft_strdup(char *str)
 {
-	int	i;
-	char *n_str;
+	int		i;
+	char	*n_str;
 
 	i = 0;
 	n_str = malloc(ft_strlen(str) + 1);
 	if (!n_str)
 		return (NULL);
-	while(str[i])
+	while (str[i])
 	{
 		n_str[i] = str[i];
 		i++;
@@ -32,22 +32,22 @@ char *ft_strdup(char *str)
 
 int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
 	return (i);
 }
 
-int get_newline(t_list *head)
+int	get_newline(t_list *head)
 {
-	int i;
+	int	i;
 
-	while(head)
+	while (head)
 	{
 		i = 0;
-		while(head->content[i])
+		while (head->content[i])
 		{
 			if (head->content[i] == '\n')
 				return (1);
@@ -60,8 +60,8 @@ int get_newline(t_list *head)
 
 int	len_to_newline(t_list *head)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	len = 0;
 	if (!head)
@@ -69,7 +69,7 @@ int	len_to_newline(t_list *head)
 	while (head)
 	{
 		i = 0;
-		while(head->content[i])
+		while (head->content[i])
 		{
 			if (head->content[i] == '\n')
 			{
@@ -82,4 +82,29 @@ int	len_to_newline(t_list *head)
 		head = head->next;
 	}
 	return (len);
+}
+
+t_list	*update_list_v2(t_list **head, int len,
+		t_list *new_head, char *remaining)
+{
+	t_list	*tmp;
+
+	while (*head && len > 0)
+	{
+		tmp = (*head)->next;
+		if (len >= ft_strlen((*head)->content))
+		{
+			len -= ft_strlen((*head)->content);
+			free((*head)->content);
+			free(*head);
+			*head = tmp;
+		}
+		else
+		{
+			remaining = ft_strdup((*head)->content + len);
+			free((*head)->content);
+			return (((*head)->content) = remaining, *head);
+		}
+	}
+	return (*head);
 }

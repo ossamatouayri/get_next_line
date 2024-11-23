@@ -6,7 +6,7 @@
 /*   By: ostouayr <ostouayr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:47:41 by ostouayr          #+#    #+#             */
-/*   Updated: 2024/11/21 21:52:03 by ostouayr         ###   ########.fr       */
+/*   Updated: 2024/11/23 09:54:49 by ostouayr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,14 @@ t_list	*update_list(t_list **head)
 		return (NULL);
 	new_head = *head;
 	len = len_to_newline(*head);
-	update_list_v2(&head, len, new_head, remaining);
+	*head = update_list_v2(head, len, new_head, remaining);
 	return (*head);
 }
+
 char	*get_next_line(int fd)
 {
 	static t_list	*head;
-	char	*next_line;
+	char			*next_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -112,9 +113,4 @@ char	*get_next_line(int fd)
 	next_line = extract_lines(head);
 	head = update_list(&head);
 	return (next_line);
-}
-int main(){
-	int fd = open("text.txt", O_RDONLY);
-	char *line = get_next_line(fd);
-	printf("%s",line);
 }
