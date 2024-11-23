@@ -36,7 +36,6 @@ int		len_to_newline(t_list *head);
 void	append_list(t_list **head, char *buff);
 t_list	*update_list(t_list **head);
 char	*extract_lines(t_list *head);
-t_list	*update_list_v2(t_list **head, int len,
-			t_list *new_head, char *remaining);
+t_list	*update_list_v2(t_list **head, int len, char *remaining);
 
 #endif

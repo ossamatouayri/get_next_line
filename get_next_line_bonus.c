@@ -88,15 +88,14 @@ void	append_list(t_list **head, char *buff)
 
 t_list	*update_list(t_list **head)
 {
-	t_list	*new_head;
 	char	*remaining;
 	int		len;
 
 	if (!*head)
 		return (NULL);
-	new_head = *head;
+	remaining = NULL;
 	len = len_to_newline(*head);
-	*head = update_list_v2(head, len, new_head, remaining);
+	*head = update_list_v2(head, len, remaining);
 	return (*head);
 }
 

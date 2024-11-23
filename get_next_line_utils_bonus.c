@@ -84,8 +84,7 @@ int	len_to_newline(t_list *head)
 	return (len);
 }
 
-t_list	*update_list_v2(t_list **head, int len,
-		t_list *new_head, char *remaining)
+t_list	*update_list_v2(t_list **head, int len, char *remaining)
 {
 	t_list	*tmp;
 

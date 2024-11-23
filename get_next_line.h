@@ -6,7 +6,7 @@
 /*   By: ostouayr <ostouayr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 09:43:46 by ostouayr          #+#    #+#             */
-/*   Updated: 2024/11/22 10:13:42 by ostouayr         ###   ########.fr       */
+/*   Updated: 2024/11/23 12:05:15 by ostouayr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		len_to_newline(t_list *head);
 void	append_list(t_list **head, char *buff);
 t_list	*update_list(t_list **head);
 char	*extract_lines(t_list *head);
-t_list	*update_list_v2(t_list **head, int len,
-			t_list *new_head, char *remaining);
+t_list	*update_list_v2(t_list **head, int len, char *remaining);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ostouayr <ostouayr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 09:47:41 by ostouayr          #+#    #+#             */
-/*   Updated: 2024/11/23 09:54:49 by ostouayr         ###   ########.fr       */
+/*   Updated: 2024/11/23 12:06:39 by ostouayr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,14 @@ void	append_list(t_list **head, char *buff)
 
 t_list	*update_list(t_list **head)
 {
-	t_list	*new_head;
 	char	*remaining;
 	int		len;
 
 	if (!*head)
 		return (NULL);
-	new_head = *head;
+	remaining = NULL;
 	len = len_to_newline(*head);
-	*head = update_list_v2(head, len, new_head, remaining);
+	*head = update_list_v2(head, len, remaining);
 	return (*head);
 }
 
