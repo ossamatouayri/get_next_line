@@ -3,7 +3,7 @@
 The Get Next Line project is designed to implement a function that reads and returns one line at a time from a file descriptor in C. This task offers valuable insights into file handling, buffering, and efficient memory management, providing foundational skills for working with files and persistent data in programming.
 
 ## How It Works
-The goal is to build a function that:
+##### The goal is to build a function that:
 
 Reads input from a file or standard input.
 Returns one line at a time, including proper handling of EOF and dynamic buffers.
