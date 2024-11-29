@@ -104,7 +104,7 @@ char	*get_next_line(int fd)
 	static t_list	*head[1024];
 	char			*next_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 		return (NULL);
 	get_list(&head[fd], fd);
 	if (!head[fd])
